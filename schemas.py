@@ -12,9 +12,9 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
-# Example schemas (replace with your own):
+# Example schemas (leave for reference):
 
 class User(BaseModel):
     """
@@ -37,6 +37,33 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# University app schemas
+
+class Department(BaseModel):
+    name: str = Field(..., description="Department name")
+    description: Optional[str] = Field(None, description="Short description of the department")
+    chair: Optional[str] = Field(None, description="Department chair")
+
+class Course(BaseModel):
+    code: str = Field(..., description="Course code, e.g., CS101")
+    title: str = Field(..., description="Course title")
+    description: Optional[str] = Field(None, description="Course description")
+    department_id: Optional[str] = Field(None, description="Related department id as string")
+    credits: int = Field(3, ge=0, le=10, description="Credit hours")
+    level: str = Field("Undergraduate", description="Undergraduate or Graduate")
+
+class News(BaseModel):
+    title: str = Field(..., description="News headline")
+    summary: Optional[str] = Field(None, description="Short summary")
+    content: Optional[str] = Field(None, description="Full content")
+    image_url: Optional[str] = Field(None, description="Optional image URL")
+
+class Inquiry(BaseModel):
+    name: str = Field(..., description="Sender name")
+    email: str = Field(..., description="Sender email")
+    message: str = Field(..., description="Message body")
+    topic: Optional[str] = Field(None, description="Topic selection like Admissions, Programs, Support")
 
 # Add your own schemas here:
 # --------------------------------------------------
